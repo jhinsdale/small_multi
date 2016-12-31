@@ -1,0 +1,117 @@
+<h2 style="font-family: Arial">README quick start: quarterly P&L</h2>
+<style>
+.small-multiple-chart { width: 100%; max-width: 100%; height: auto; box-sizing: border-box; overflow: visible; }
+.small-multiple-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(max(min(100%, var(--small-multiple-basis)), calc(100% / var(--small-multiple-cols))), 1fr)); align-items: start; }
+</style><div class="small-multiple-wrap" style="--small-multiple-basis: 306px; --small-multiple-cols: 2;"><style>
+#sm-1 .axis { stroke: black; stroke-width: 0.75; }
+#sm-1 .tick { stroke: black; stroke-width: 0.2; }
+#sm-1 .bar { cursor: pointer; }
+#sm-1 .bar:hover { fill: goldenrod; }
+#sm-1 .bar-wrap:hover .bar { fill: goldenrod; }
+#sm-1 .bar-tooltip { display: none; pointer-events: none; }
+#sm-1 .bar-wrap:hover .bar-tooltip { display: inline; }
+#sm-1 .bar-tooltip-bg { fill: white; stroke: black; stroke-width: 0.2; }
+#sm-1 .bar-tooltip-text { font-family: "Arial"; font-size: 5; text-anchor: middle; fill: goldenrod; }
+#sm-1 .xlabel-marker { fill: black; }
+#sm-1 .ctitle { font-family: "Arial"; font-size: 10; text-anchor: middle; }
+#sm-1 .axlabel { font-family: "Arial"; font-size: 5; text-anchor: middle; fill: black; }
+#sm-1 .xaxlabel { font-family: "Arial"; font-size: 5.000000000000001; text-anchor: middle; fill: black; }
+#sm-1 .yaxlabel { font-family: "Arial"; font-size: 5; text-anchor: start; fill: black; }
+</style><svg viewBox="0 0 153.0 148.0" preserveAspectRatio="xMinYMin" width="306.0" height="296.0" id="sm-1" class="small-multiple-chart"><rect x="0.375" y="0.375" width="151.5" height="146.5" stroke="black" fill="none" stroke-width="0.75" />
+<text class="ctitle" x="83.5" y="12" fill="#0099ff">AlphaCo (130)</text>
+<text class="yaxlabel" x="12" y="22">Profit ($k)</text>
+<text class="axlabel" x="83.5" y="143.0">Quarter</text>
+<line class="axis" x1="25.625" y1="103.92307692307693" x2="141.0" y2="103.92307692307693" />
+<line class="axis" x1="26" y1="27" x2="26" y2="127.375" />
+<g onmouseover="document.getElementById('sm-1-tooltip-0').style.display='inline'" onmouseout="document.getElementById('sm-1-tooltip-0').style.display='none'" class="bar-wrap"><title>100
+2024 Q1
+AlphaCo</title><rect x="36.0" y="27.0" width="25.000000000000004" height="76.92307692307693" fill="#0099ff" stroke="black" stroke-width="0.75" class="bar" />
+</g>
+<text class="xaxlabel" x="48.5" y="133.0">2024 Q1</text>
+<g onmouseover="document.getElementById('sm-1-tooltip-1').style.display='inline'" onmouseout="document.getElementById('sm-1-tooltip-1').style.display='none'" class="bar-wrap"><title>-30
+2024 Q2
+AlphaCo</title><rect x="71.0" y="103.92307692307693" width="25.000000000000004" height="23.076923076923077" fill="#0099ff" stroke="black" stroke-width="0.75" class="bar" />
+</g>
+<text class="xaxlabel" x="83.5" y="133.0">2024 Q2</text>
+<g onmouseover="document.getElementById('sm-1-tooltip-2').style.display='inline'" onmouseout="document.getElementById('sm-1-tooltip-2').style.display='none'" class="bar-wrap"><title>60
+2024 Q3
+AlphaCo</title><rect x="106.0" y="57.76923076923078" width="25.000000000000004" height="46.15384615384615" fill="#0099ff" stroke="black" stroke-width="0.75" class="bar" />
+</g>
+<text class="xaxlabel" x="118.5" y="133.0">2024 Q3</text>
+<g id="sm-1-tooltip-0" class="bar-tooltip"><rect x="36.0" y="5.0" width="25.0" height="20.0" rx="1" ry="1" class="bar-tooltip-bg" />
+<text x="48.5" y="11.0" class="bar-tooltip-text">100</text>
+<text x="48.5" y="17.0" class="bar-tooltip-text">2024 Q1</text>
+<text x="48.5" y="23.0" class="bar-tooltip-text">AlphaCo</text>
+</g>
+<g id="sm-1-tooltip-1" class="bar-tooltip"><rect x="71.0" y="129.0" width="25.0" height="20.0" rx="1" ry="1" class="bar-tooltip-bg" />
+<text x="83.5" y="135.0" class="bar-tooltip-text">-30</text>
+<text x="83.5" y="141.0" class="bar-tooltip-text">2024 Q2</text>
+<text x="83.5" y="147.0" class="bar-tooltip-text">AlphaCo</text>
+</g>
+<g id="sm-1-tooltip-2" class="bar-tooltip"><rect x="106.0" y="35.76923076923078" width="25.0" height="20.0" rx="1" ry="1" class="bar-tooltip-bg" />
+<text x="118.5" y="41.76923076923078" class="bar-tooltip-text">60</text>
+<text x="118.5" y="47.76923076923078" class="bar-tooltip-text">2024 Q3</text>
+<text x="118.5" y="53.76923076923078" class="bar-tooltip-text">AlphaCo</text>
+</g>
+<text class="yaxlabel" x="12" y="67.96153846153847">50</text>
+<line class="tick" x1="24" y1="65.46153846153847" x2="26" y2="65.46153846153847" />
+<text class="yaxlabel" x="12" y="29.5">100</text>
+<line class="tick" x1="24" y1="27.0" x2="26" y2="27.0" />
+</svg>
+<style>
+#sm-2 .axis { stroke: black; stroke-width: 0.75; }
+#sm-2 .tick { stroke: black; stroke-width: 0.2; }
+#sm-2 .bar { cursor: pointer; }
+#sm-2 .bar:hover { fill: goldenrod; }
+#sm-2 .bar-wrap:hover .bar { fill: goldenrod; }
+#sm-2 .bar-tooltip { display: none; pointer-events: none; }
+#sm-2 .bar-wrap:hover .bar-tooltip { display: inline; }
+#sm-2 .bar-tooltip-bg { fill: white; stroke: black; stroke-width: 0.2; }
+#sm-2 .bar-tooltip-text { font-family: "Arial"; font-size: 5; text-anchor: middle; fill: goldenrod; }
+#sm-2 .xlabel-marker { fill: black; }
+#sm-2 .ctitle { font-family: "Arial"; font-size: 10; text-anchor: middle; }
+#sm-2 .axlabel { font-family: "Arial"; font-size: 5; text-anchor: middle; fill: black; }
+#sm-2 .xaxlabel { font-family: "Arial"; font-size: 5.000000000000001; text-anchor: middle; fill: black; }
+#sm-2 .yaxlabel { font-family: "Arial"; font-size: 5; text-anchor: start; fill: black; }
+</style><svg viewBox="0 0 153.0 148.0" preserveAspectRatio="xMinYMin" width="306.0" height="296.0" id="sm-2" class="small-multiple-chart"><rect x="0.375" y="0.375" width="151.5" height="146.5" stroke="black" fill="none" stroke-width="0.75" />
+<text class="ctitle" x="83.5" y="12" fill="#0099ff">BetaCo (20)</text>
+<text class="yaxlabel" x="12" y="22">Profit ($k)</text>
+<text class="axlabel" x="83.5" y="143.0">Quarter</text>
+<line class="axis" x1="25.625" y1="103.92307692307693" x2="141.0" y2="103.92307692307693" />
+<line class="axis" x1="26" y1="27" x2="26" y2="127.375" />
+<g onmouseover="document.getElementById('sm-2-tooltip-0').style.display='inline'" onmouseout="document.getElementById('sm-2-tooltip-0').style.display='none'" class="bar-wrap"><title>-10
+2024 Q1
+BetaCo</title><rect x="36.0" y="103.92307692307693" width="25.000000000000004" height="7.6923076923076925" fill="#0099ff" stroke="black" stroke-width="0.75" class="bar" />
+</g>
+<text class="xaxlabel" x="48.5" y="133.0">2024 Q1</text>
+<g onmouseover="document.getElementById('sm-2-tooltip-1').style.display='inline'" onmouseout="document.getElementById('sm-2-tooltip-1').style.display='none'" class="bar-wrap"><title>50
+2024 Q2
+BetaCo</title><rect x="71.0" y="65.46153846153847" width="25.000000000000004" height="38.46153846153847" fill="#0099ff" stroke="black" stroke-width="0.75" class="bar" />
+</g>
+<text class="xaxlabel" x="83.5" y="133.0">2024 Q2</text>
+<g onmouseover="document.getElementById('sm-2-tooltip-2').style.display='inline'" onmouseout="document.getElementById('sm-2-tooltip-2').style.display='none'" class="bar-wrap"><title>-20
+2024 Q3
+BetaCo</title><rect x="106.0" y="103.92307692307693" width="25.000000000000004" height="15.384615384615385" fill="#0099ff" stroke="black" stroke-width="0.75" class="bar" />
+</g>
+<text class="xaxlabel" x="118.5" y="133.0">2024 Q3</text>
+<g id="sm-2-tooltip-0" class="bar-tooltip"><rect x="36.0" y="113.61538461538463" width="25.0" height="20.0" rx="1" ry="1" class="bar-tooltip-bg" />
+<text x="48.5" y="119.61538461538463" class="bar-tooltip-text">-10</text>
+<text x="48.5" y="125.61538461538463" class="bar-tooltip-text">2024 Q1</text>
+<text x="48.5" y="131.61538461538464" class="bar-tooltip-text">BetaCo</text>
+</g>
+<g id="sm-2-tooltip-1" class="bar-tooltip"><rect x="71.0" y="43.46153846153847" width="25.0" height="20.0" rx="1" ry="1" class="bar-tooltip-bg" />
+<text x="83.5" y="49.46153846153847" class="bar-tooltip-text">50</text>
+<text x="83.5" y="55.46153846153847" class="bar-tooltip-text">2024 Q2</text>
+<text x="83.5" y="61.46153846153847" class="bar-tooltip-text">BetaCo</text>
+</g>
+<g id="sm-2-tooltip-2" class="bar-tooltip"><rect x="106.0" y="121.30769230769232" width="25.0" height="20.0" rx="1" ry="1" class="bar-tooltip-bg" />
+<text x="118.5" y="127.30769230769232" class="bar-tooltip-text">-20</text>
+<text x="118.5" y="133.30769230769232" class="bar-tooltip-text">2024 Q3</text>
+<text x="118.5" y="139.30769230769232" class="bar-tooltip-text">BetaCo</text>
+</g>
+<text class="yaxlabel" x="12" y="67.96153846153847">50</text>
+<line class="tick" x1="24" y1="65.46153846153847" x2="26" y2="65.46153846153847" />
+<text class="yaxlabel" x="12" y="29.5">100</text>
+<line class="tick" x1="24" y1="27.0" x2="26" y2="27.0" />
+</svg>
+</div>
