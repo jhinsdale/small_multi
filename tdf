@@ -1,0 +1,211 @@
+#!/usr/bin/python
+
+import sys
+import argparse
+import re
+from itertools import groupby
+
+# Process lines in tab-delimited file
+def main(argv):
+
+    # Parse args
+    ap = argparse.ArgumentParser(description='Process lines in delimited file.')
+    ap.add_argument("-o", "--output-fields", metavar="i,j,k", help="extract output fields")
+    ap.add_argument("-fs", "--field_separator", metavar="sep", help="field separator")
+    ap.add_argument("-ls", "--leading-substring", metavar="N:m", help="truncate input field N to size m")
+    ap.add_argument("-s", "--sort", action="store_true", help="sort output")
+    ap.add_argument("-c", "--append-count", action="store_true", help="append distinct lines count")
+    ap.add_argument("-t", "--top-counts", action="store_true", help="order by top counts")
+    ap.add_argument("-au", "--author", metavar="N", type=int, help="extract author from input field N")
+    ap.add_argument("-qu", "--quarter", metavar="N", type=int, help="extract quarter YYYY-MM* from input field N")
+    ap.add_argument("-ft", "--file-type", metavar="N", type=int, help="replace input field N with file type")
+    ap.add_argument("-inc", "--include", metavar="N:s1,s2...", help="include only values s1, s2 (or from @file) in input field N")
+    ap.add_argument("-exc", "--exclude", metavar="N:s1,s2...", help="exclude values s1, s2 (or from @file) in input field N")
+    ap.add_argument("-m", "--map", metavar="N:mapfile", help="map values, taken from two-column file, in input field N")
+    args = ap.parse_args()
+
+    # print str(args)
+
+    # Field separator
+    field_sep = None
+    if args.field_separator is not None:
+        field_sep = args.field_separator
+        if field_sep == "\\t":
+            field_sep = "\t"
+            
+    # Get field indexes
+    extract_indexes = None
+    if args.output_fields:
+        extract_indexes = [int(i) for i in args.output_fields.split(",")]
+        for i in extract_indexes:
+            if i < 1:
+                raise Exception("Invalid index " + str(i) + " must be >= 1")
+
+    # Apply leading substring
+    truncate_field = truncate_length = None
+    if args.leading_substring is not None:
+        (truncate_field, truncate_length) = [int(i) for i in args.leading_substring.split(":")]
+
+    # Include values
+    include_field = include_values = None
+    if args.include is not None:
+        (include_field, val_list) = args.include.split(":")
+        include_field = int(include_field)
+        include_values = get_values(val_list)
+
+    # Exclude values
+    exclude_field = exclude_values = None
+    if args.exclude is not None:
+        (exclude_field, val_list) = args.exclude.split(":")
+        exclude_field = int(exclude_field)
+        exclude_values = get_values(val_list)
+
+    # Map values
+    map_field = map_values = None
+    if args.map is not None:
+        (map_field, map_fn) = args.map.split(":")
+        map_field = int(map_field)
+        map_values = get_pairs(map_fn, field_sep)
+
+    # Read lines of standard in
+    lines = sys.stdin.readlines()
+    output = []
+    line_no = 0
+    for line in lines:
+        line_no += 1
+        line = line.strip()
+        # TODO: split by regex not single char
+        flds = line.split(field_sep)
+
+        # Apply includes and excludes
+        if include_field is not None:
+            if flds[include_field-1] not in include_values:
+                continue
+        if exclude_field is not None:
+            if flds[exclude_field-1] in exclude_values:
+                continue
+
+        # Truncate field to length
+        if truncate_field is not None:
+            flds[truncate_field-1] = flds[truncate_field-1][0:truncate_length]
+
+        # Extract author
+        if args.author is not None:
+            flds[args.author-1] = extract_author(flds[args.author-1])
+
+        # Extract file type
+        if args.file_type is not None:
+            flds[args.file_type-1] = file_type(flds[args.file_type-1])
+
+        # Extract quarter from date
+        if args.quarter is not None:
+            q = extract_quarter(flds[args.quarter-1])
+            if q is None:
+                raise Exception("Error at line " + str(line_no) + ":\n" + line + "\nBad quarter '" + flds[args.quarter-1] + "'")
+            flds[args.quarter-1] = q
+
+        # Apply map, note this is done after all author/date transformations, i.e.
+        # operates on the transformed value
+        if map_field is not None:
+            if flds[map_field-1] in map_values:
+                flds[map_field-1] = map_values[flds[map_field-1]]
+
+        # Extract output fields
+        if extract_indexes is not None:
+            new_flds = []
+            for i in extract_indexes:
+                new_flds.append(flds[i-1])
+            flds = new_flds
+
+        output.append(flds)
+
+    # Sort if needed
+    if args.sort or args.append_count or args.top_counts:
+        output.sort()
+
+    # Append counts
+    if args.append_count or args.top_counts:
+        groups = []
+        for tup, group in groupby(output):
+            cnt = 0
+            for item in group:
+                cnt += 1
+            tup.append(str(cnt))
+            groups.append(tup)
+        output = groups
+
+    # Sort by top counts
+    if args.top_counts:
+        def by_top_count_then_else(a, b):
+            result = cmp(b[-1], a[-1])
+            if result == 0:
+                return cmp(a, b)
+            return result
+        output.sort(cmp=by_top_count_then_else)
+
+    # Print output
+    delim = field_sep
+    if delim is None:
+        delim = " "
+    for flds in output:
+        print delim.join(flds)
+
+# Get pairs of values, either split list or @file
+def get_pairs(fn, field_sep="\t"):
+    pairs = [line.strip().split(field_sep) for line in open(fn)]
+    result = {}
+    for (k, v) in pairs:
+        result[k] = v
+    return result
+
+# Get values, either split list or @file or single value
+def get_values(vlist):
+    result = vlist.split(",")
+    # Comma-delimted array
+    if len(result) <= 1:
+        if result[0][0] == "@":
+            fn = result[0][1:]
+            result = [line.strip() for line in open(fn)]
+    return array_to_dict(result)
+
+# Get author
+def extract_author(author):
+    match = re.match(r'.*<([a-zA-Z0-9_\.]+)@.*', author)
+    if match:
+        return match.group(1)
+    match = re.match(r'.*<([^>]+)>.*', author)
+    if match:
+        return match.group(1)
+    return author
+
+# Make dict from array
+def array_to_dict(arr):
+    result = {}
+    for item in arr:
+        result[item] = True
+    return result
+
+# Get file type
+def file_type(s):
+    if s is None:
+        return None
+    idx = s.rfind(".")
+    if idx >= 0:
+        result = s[idx:]
+        if len(result) <= 15:
+            return result
+    return "none"
+
+# Get quarter
+def extract_quarter(d):
+    if len(d) < 7:
+        return d
+    start = d[0:5]
+    mo = d[5:7]
+    momap = {"01": "Q1", "02": "Q1", "03": "Q1", "04": "Q2", "05": "Q2", "06": "Q2", "07": "Q3", "08": "Q3", "09": "Q3", "10": "Q4", "11": "Q4", "12": "Q4",}
+    if mo not in momap:
+        return None
+    return start + momap[mo]
+        
+# Do it
+main(sys.argv)
