@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Copyright 2014-2016 John K. Hinsdale
 
 
 from toposort import toposort

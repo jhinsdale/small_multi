@@ -1,4 +1,5 @@
 # svgtag.py -- Generate tags for SVG
+# Copyright 2014-2016 John K. Hinsdale
 
 import pprint
 

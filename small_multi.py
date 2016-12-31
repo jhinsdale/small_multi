@@ -1,6 +1,7 @@
 #
 # small_multi.py
 #
+# Copyright 2014-2016 John K. Hinsdale
 
 from toposort import toposort
 from svgtag import st_style, st_svg, st_text, st_rect, st_line, st_coords, pp

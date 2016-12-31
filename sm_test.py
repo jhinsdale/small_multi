@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Copyright 2014-2016 John K. Hinsdale
 
 from small_multi import render_small_multiples
 from random import uniform

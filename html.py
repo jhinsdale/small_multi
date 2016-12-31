@@ -1,4 +1,5 @@
 # html.py
+# Copyright 2014-2016 John K. Hinsdale
 
 from util import *
 import cu

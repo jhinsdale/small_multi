@@ -1,6 +1,7 @@
 #
 # Chart class
 #
+# Copyright 2014-2016 John K. Hinsdale
 
 from svgtag import *
 import re, math
