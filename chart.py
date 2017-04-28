@@ -438,7 +438,7 @@ def _axis_labels_for_max(n):
         elif cur >= 1000000:
             cur_disp = ("%.2g" % (cur/1000000.0)) + "M"
         elif cur >= 1000:
-            cur_disp = ("%.2g" % (cur/1000.0)) + "k"
+            cur_disp = ("%.3g" % (cur/1000.0)) + "k"
         else:
             cur_disp = str(cur)
         labels.append(str(cur_disp))
